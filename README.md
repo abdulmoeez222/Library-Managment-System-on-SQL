@@ -1,0 +1,139 @@
+Read ME FOR LIBRARY MANAGEMENT SYSTEM ON SQL
+# Library Management System Database
+
+## Introduction
+
+This project involves creating a database for a Library Management System. The database is designed to manage various entities related to a library, including publishers, authors, libraries, customers, managers, staff, books, and transactions. This README file provides an overview of the database structure, tables, and some example SQL queries used for managing the data.
+
+## Database Name
+
+- **Database:** `library_management_system`
+
+## Tables Overview
+
+1. **Publisher**
+   - **publisher_id**: INT, Primary Key
+   - **publisher_name**: VARCHAR(100)
+   - **email_id**: VARCHAR(100)
+   - **year_of_book**: INT
+
+2. **Author**
+   - **author_id**: INT, Primary Key
+   - **author_name**: VARCHAR(100)
+   - **author_email_id**: VARCHAR(100)
+
+3. **Library**
+   - **library_id**: INT, Primary Key
+   - **library_address**: VARCHAR(100)
+   - **library_number**: INT
+   - **library_name**: VARCHAR(100)
+
+4. **Customer**
+   - **customer_id**: INT, Primary Key
+   - **customer_name**: VARCHAR(100)
+   - **customer_email_id**: VARCHAR(100)
+   - **customer_gender**: VARCHAR(100)
+   - **customer_number**: INT
+
+5. **Manager**
+   - **manager_id**: INT, Primary Key
+   - **manager_name**: VARCHAR(100)
+   - **manager_email_id**: VARCHAR(100)
+   - **manager_contact_number**: INT
+
+6. **Staff**
+   - **staff_id**: INT, Primary Key
+   - **staf_name**: VARCHAR(100)
+   - **staf_email_id**: VARCHAR(100)
+   - **staf_contact_number**: INT
+   - **staf_shift**: VARCHAR(100)
+
+7. **Staff Authentication**
+   - **login_id**: INT, Primary Key
+   - **staff_id**: INT, Foreign Key (References `Staff(staff_id)`)
+   - **staff_password**: VARCHAR(100)
+   - **otp_verification**: INT
+
+8. **Transaction**
+   - **transaction_id**: INT, Primary Key
+   - **transaction_name**: VARCHAR(100)
+   - **transaction_date**: DATE
+   - **customer_id**: INT, Foreign Key (References `Customer(customer_id)`)
+
+9. **Genre**
+   - **genre_id**: INT, Primary Key
+   - **genre_name**: VARCHAR(100)
+   - **description**: VARCHAR(100)
+   - **rating**: DECIMAL(5, 2)
+   - **number_of_books**: INT
+
+10. **Fiction**
+    - **f_book_id**: INT, Primary Key
+    - **f_book_name**: VARCHAR(100)
+    - **instock**: BOOLEAN
+    - **edition_of_books**: INT
+    - **genre_id**: INT, Foreign Key (References `Genre(genre_id)`)
+
+11. **Nonfiction**
+    - **n_book_id**: INT, Primary Key
+    - **n_book_name**: VARCHAR(100)
+    - **instock**: BOOLEAN
+    - **edition_of_books**: INT
+    - **genre_id**: INT, Foreign Key (References `Genre(genre_id)`)
+
+12. **History**
+    - **h_book_id**: INT, Primary Key
+    - **h_book_name**: VARCHAR(100)
+    - **instock**: BOOLEAN
+    - **edition_of_books**: INT
+    - **genre_id**: INT, Foreign Key (References `Genre(genre_id)`)
+
+13. **Books**
+    - **book_id**: INT, Primary Key
+    - **book_name**: VARCHAR(100)
+    - **author_id**: INT, Foreign Key (References `Author(author_id)`)
+    - **publisher_id**: INT, Foreign Key (References `Publisher(publisher_id)`)
+    - **genre_id**: INT, Foreign Key (References `Genre(genre_id)`)
+
+## SQL Queries
+
+### Data Insertion
+- Insert records into the `Publisher`, `Author`, `Library`, `Manager`, `Staff`, `Staff Authentication`, `Customer`, `Transaction`, `Books`, `Genre`, `Fiction`, `Nonfiction`, and `History` tables using `INSERT INTO`.
+
+### Data Selection
+- Example: Get all authors whose names start with 'J':
+  ```sql
+  SELECT author_name 
+  FROM author 
+  WHERE author_name LIKE 'J%';
+Example: Get the number of books by each publisher:
+sql
+Copy code
+SELECT publisher_name, COUNT(book_id) as num_books 
+FROM books 
+JOIN publisher 
+ON books.publisher_id = publisher.publisher_id 
+GROUP BY publisher_name;
+Data Updating
+Example: Update the email ID of an author:
+sql
+Copy code
+UPDATE author
+SET author_email_id = 'newemail@example.com'
+WHERE author_id = 1;
+Data Deletion
+Example: Delete a record from the nonfiction table:
+sql
+Copy code
+DELETE FROM nonfiction
+WHERE n_book_id = 1;
+
+Conclusion
+
+This database schema provides a comprehensive system for managing a library's operations, including the management of books, authors, publishers, customers, staff, and transactions. The SQL queries included showcase various operations such as data retrieval, updating, and deletion, making this database suitable for a real-world library management application.
+
+
+
+
+
+
